@@ -1,0 +1,49 @@
+configuration：
+win10 
+tensorflow-gpu2.0.0 
+tensorboard2.0.2
+
+code：
+
+logdir = './callbacks'
+if not os.path.exists(logdir):
+    os.mkdir(logdir)
+output_model_file = os.path.join(logdir, "fashion_mnist_model.h5")
+
+callbacks = [
+    keras.callbacks.TensorBoard(logdir),
+    keras.callbacks.ModelCheckpoint(output_model_file, save_best_only = True),
+    keras.callbacks.EarlyStopping(patience=5, min_delta=1e-3),
+]
+history = model.fit(x_train_scaled, y_train, epochs=10,
+                    validation_data=(x_valid_scaled, y_valid),
+                    callbacks = callbacks)
+
+
+error: tensorflow.python.eager.profiler.ProfilerNotRunningError: Cannot stop profil
+
+
+
+modification:
+1. There are something wrong with the file path
+2. We can use "profile_batch" 
+
+Here are the modification code.
+
+logdir = os.path.join('./callbacks')
+
+if not os.path.exists(logdir):
+    os.mkdir(logdir)
+
+output_model_file = os.path.join(logdir, "fashion_mnist_model.h5")
+
+
+callbacks = [
+    keras.callbacks.TensorBoard(log_dir=logdir, histogram_freq=1, profile_batch = 100000000),
+    keras.callbacks.ModelCheckpoint(filepath=output_model_file, save_best_only=True),
+    keras.callbacks.EarlyStopping(patience=5, min_delta=1e-3,),
+]
+
+history = model.fit(x_train_scaled, y_train, epochs=10,
+                    validation_data=(x_valid_scaled, y_valid),
+                    callbacks=callbacks)
