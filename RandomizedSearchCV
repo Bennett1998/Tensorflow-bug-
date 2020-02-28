@@ -1,0 +1,8 @@
+_pickle.PicklingError: Could not pickle the task to send it to the workers.
+Reason：maybe win10 doesn't support parallel computing, as it doesn't support multiprocess too.
+
+
+RuntimeError: Cannot clone object <tensorflow.python.keras.wrappers.scikit_learn.KerasRegressor object at 0x000001FF6B3A76D8>, as the constructor either does not set or modifies parameter layer_size
+RuntimeError: Cannot clone object <tensorflow.python.keras.wrappers.scikit_learn.KerasRegressor object at 0x000001A7808D9470>, as the constructor either does not set or modifies parameter learning_rate
+
+Reason: Maybe win10 doesn't support the hyperparameters searching to "learning rate" or "layers size"temporaryly 
